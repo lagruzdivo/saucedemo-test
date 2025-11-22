@@ -61,5 +61,5 @@ def test_add_cart(logged_in):
     driver.find_element(*FINISH_BUTTON).click()
 
     checkout_complete = driver.find_element(By.CSS_SELECTOR, "[data-test='complete-header']")
-    assert checkout_complete.text == "Thank you for your order"
+    assert checkout_complete.text == "Thank you for your order!"
 
