@@ -36,7 +36,7 @@ def driver(request):
     driver.quit()
 
 @pytest.fixture(scope="function")
-def logged_in(driver):
+def login(driver):
     driver.get("https://www.saucedemo.com")
 
     # Login
@@ -48,7 +48,7 @@ def logged_in(driver):
         EC.presence_of_element_located(INVENTORY_ITEMS)
     )
 
-    return driver
+    yield driver
 
 def pytest_addoption(parser):
     parser.addoption("--browser", action="store", default="chrome", help="Browser to run tests: chrome or firefox")
