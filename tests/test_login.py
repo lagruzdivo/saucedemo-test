@@ -1,27 +1,20 @@
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
-
-# Locators for test
-PRODUCT_CARDS = (By.CLASS_NAME, "inventory_item")
-ADD_TO_CART_SAUCE_LABS_BACKPACK = (By.ID, "add-to-cart-sauce-labs-backpack")
-ADD_TO_CART_SAUCE_LABS_ONESIE = (By.ID, "add-to-cart-sauce-labs-onesie")
-ADD_TO_CART_SAUCE_LABS_FLEECE_JACKET = (By.ID, "add-to-cart-sauce-labs-fleece-jacket")
-SHOPPING_CART_CONTAINER = (By.ID, "shopping_cart_container")
-CART_BADGE = (By.CSS_SELECTOR, "[data-test='shopping-cart-badge']")
-INVENTORY_ITEMS_NAMES = (By.CSS_SELECTOR, "[data-test='inventory-item-name']")
-CHECKOUT_BUTTON = (By.ID, "checkout")
-FIRST_NAME = (By.ID, "first-name")
-LAST_NAME = (By.ID, "last-name")
-POSTAL_CODE = (By.ID, "postal-code")
-CONTINUE_BUTTON = (By.ID, "continue")
-FINISH_BUTTON = (By.ID, "finish")
+from pages.locators import (
+    # Product locators
+    PRODUCT_CARDS, ADD_TO_CART_SAUCE_LABS_BACKPACK, ADD_TO_CART_SAUCE_LABS_ONESIE, ADD_TO_CART_SAUCE_LABS_FLEECE_JACKET,
+    # Cart locators
+    SHOPPING_CART_CONTAINER, CART_BADGE, INVENTORY_ITEMS_NAMES,
+    # Checkout locators
+    CHECKOUT_BUTTON, FIRST_NAME, LAST_NAME, POSTAL_CODE, CONTINUE_BUTTON, FINISH_BUTTON, COMPLETE_HEADER
+)
 
 def add_product_to_cart(driver, locator, timeout=10):
     WebDriverWait(driver, timeout).until(
         EC.element_to_be_clickable(locator)
     ).click()
-def fill_checkout_form(driver, first_name="John", last_name = "John", postal_code = "123456"):
+def fill_checkout_form(driver, first_name, last_name, postal_code):
     driver.find_element(*FIRST_NAME).send_keys(first_name)
     driver.find_element(*LAST_NAME).send_keys(last_name)
     driver.find_element(*POSTAL_CODE).send_keys(postal_code)
@@ -45,32 +38,31 @@ def verify_cart_badge(driver, count):
     cart_badge = driver.find_element(*CART_BADGE)
     assert cart_badge.text == count, f"Expected {count} but got {cart_badge.text}"
 
-def test_open_page(login):
-    assert "Swag Labs" in login.title
+def test_open_page(driver, login):
+    assert "Swag Labs" in driver.title
 
     #Products
-    product_cards = login.find_elements(*PRODUCT_CARDS)
+    product_cards = driver.find_elements(*PRODUCT_CARDS)
     assert len(product_cards) == 6, f"Expected 6 products, got {len(product_cards)}"
 
-def test_checkout(login):
+def test_checkout(driver, login):
 
     # Add to cart
-
-    add_product_to_cart(login, ADD_TO_CART_SAUCE_LABS_BACKPACK)
-    add_product_to_cart(login, ADD_TO_CART_SAUCE_LABS_ONESIE)
-    add_product_to_cart(login, ADD_TO_CART_SAUCE_LABS_FLEECE_JACKET)
+    add_product_to_cart(driver, ADD_TO_CART_SAUCE_LABS_BACKPACK)
+    add_product_to_cart(driver, ADD_TO_CART_SAUCE_LABS_ONESIE)
+    add_product_to_cart(driver, ADD_TO_CART_SAUCE_LABS_FLEECE_JACKET)
 
     # Shopping cart container
-    login.find_element(*SHOPPING_CART_CONTAINER).click()
-    verify_inventory_items(login, "Sauce Labs Backpack", "Sauce Labs Onesie", "Sauce Labs Fleece Jacket")
+    driver.find_element(*SHOPPING_CART_CONTAINER).click()
+    verify_inventory_items(driver, "Sauce Labs Backpack", "Sauce Labs Onesie", "Sauce Labs Fleece Jacket")
 
-    login.find_element(*CHECKOUT_BUTTON).click()
+    driver.find_element(*CHECKOUT_BUTTON).click()
 
     # Checkout: Your information
-    fill_checkout_form(login)
+    fill_checkout_form(driver, "John", "Doe", "123456")
 
-    login.find_element(*FINISH_BUTTON).click()
+    driver.find_element(*FINISH_BUTTON).click()
 
-    checkout_complete = login.find_element(By.CSS_SELECTOR, "[data-test='complete-header']")
-    assert checkout_complete.text == "Thank you for your order!"
+    checkout_complete_title = driver.find_element(*COMPLETE_HEADER)
+    assert checkout_complete_title.text == "Thank you for your order!"
 
