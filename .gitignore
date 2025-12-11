@@ -1,3 +1,17 @@
-*.pyc
-__pycache__/
+# PyCharm
+.idea/
+*.iws
+*.iml
+*.ipr
+
+# Virtual environment
 .venv/
+venv/
+env/
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
