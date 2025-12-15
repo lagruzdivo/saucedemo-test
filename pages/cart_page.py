@@ -31,3 +31,7 @@ class CartPage(BasePage):
 
     def go_to_cart(self):
         self.find_element(CART_LOCATORS['SHOPPING_CART_CONTAINER']).click()
+
+    def click_checkout_button(self):
+        self.click(
+            CART_LOCATORS['CHECKOUT_BUTTON'], )

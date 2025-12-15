@@ -20,16 +20,24 @@ PRODUCT_LOCATORS = {
 CART_LOCATORS = {
     'SHOPPING_CART_CONTAINER': (By.ID, "shopping_cart_container"),
     'CART_BADGE': (By.CSS_SELECTOR, "[data-test='shopping-cart-badge']"),
-    'INVENTORY_ITEMS_NAMES': (By.CSS_SELECTOR, "[data-test='inventory-item-name']")
+    'INVENTORY_ITEMS_NAMES': (By.CSS_SELECTOR, "[data-test='inventory-item-name']"),
+    'CHECKOUT_BUTTON': (By.ID, "checkout")
 }
 
-# Checkout locators
-CHECKOUT_LOCATORS = {
-    'CHECKOUT_BUTTON': (By.ID, "checkout"),
+# User form locators
+USER_FORM_LOCATORS = {
     'FIRST_NAME': (By.ID, "first-name"),
     'LAST_NAME': (By.ID, "last-name"),
     'POSTAL_CODE': (By.ID, "postal-code"),
-    'CONTINUE_BUTTON': (By.ID, "continue"),
-    'FINISH_BUTTON': (By.ID, "finish"),
+    'CONTINUE_BUTTON': (By.ID, "continue")
+}
+
+# Checkout overview locator
+CHECKOUT_OVERVIEW_LOCATORS = {
+    'FINISH_BUTTON': (By.ID, "finish")
+}
+
+# Order success locators
+ORDER_SUCCESS_LOCATORS = {
     'COMPLETE_HEADER': (By.CSS_SELECTOR, "[data-test='complete-header']")
 }
