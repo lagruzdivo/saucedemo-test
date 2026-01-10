@@ -3,6 +3,12 @@ from pages.base_page import BasePage
 from pages.locators import CART_LOCATORS
 
 class CartPage(BasePage):
+    def __init__(self, driver):
+        super().__init__(driver)
+
+        self.shopping_cart_container = driver.find_element(CART_LOCATORS['SHOPPING_CART_CONTAINER'])
+        self.checkout_button = self.find_element(CART_LOCATORS['CHECKOUT_BUTTON'])
+
     def verify_cart_badge(self, count, timeout=10): # клик иконки корзины, ждёт появление цифры и проверяет её
         self.find_element(CART_LOCATORS['SHOPPING_CART_CONTAINER']).click()
 
@@ -30,8 +36,7 @@ class CartPage(BasePage):
             assert actual_item == expected_item, f"item{i+1}: expected '{expected_item}' but got '{actual_item}'"
 
     def go_to_cart(self):
-        self.find_element(CART_LOCATORS['SHOPPING_CART_CONTAINER']).click()
+        self.shopping_cart_container.click()
 
     def click_checkout_button(self):
-        self.click(
-            CART_LOCATORS['CHECKOUT_BUTTON'], )
+        self.checkout_button.click()

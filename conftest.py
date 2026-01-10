@@ -29,7 +29,7 @@ def driver(request):
 @pytest.fixture(scope="function")
 def login(driver):
     login_page = LoginPage(driver)
-    login_page.login("performance_glitch_user", "secret_sauce")
+    login_page.login("standard_user", "secret_sauce")
 
 def pytest_addoption(parser):
     parser.addoption("--browser", action="store", default="chrome", help="Browser to run tests: chrome or firefox")

@@ -9,9 +9,11 @@ def test_checkout(driver, login): # полная последовательно�
 
     # Add to cart
     inventory_page = InventoryPage(driver)
-    inventory_page.add_product_to_cart(PRODUCT_LOCATORS['ITEM_BACKPACK'])
-    inventory_page.add_product_to_cart(PRODUCT_LOCATORS['ITEM_ONESIE'])
-    inventory_page.add_product_to_cart(PRODUCT_LOCATORS['ITEM_FLEECE_JACKET'])
+    inventory_page.add_products_to_cart(
+        PRODUCT_LOCATORS['ITEM_BACKPACK'],
+        PRODUCT_LOCATORS['ITEM_ONESIE'],
+        PRODUCT_LOCATORS['ITEM_FLEECE_JACKET']
+    )
 
     # Shopping cart container
     cart_page = CartPage(driver)

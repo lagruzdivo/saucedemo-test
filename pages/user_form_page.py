@@ -4,9 +4,16 @@ from pages.base_page import BasePage
 from pages.locators import USER_FORM_LOCATORS
 
 class UserFormPage(BasePage):
-    def fill_checkout_form(self, first_name, last_name, postal_code): # заполнение формы заказа
+    def __init__(self, driver):
+        super().__init__(driver)
 
-        self.input_text(USER_FORM_LOCATORS['FIRST_NAME'], first_name)
-        self.input_text(USER_FORM_LOCATORS['LAST_NAME'], last_name)
-        self.input_text(USER_FORM_LOCATORS['POSTAL_CODE'], postal_code)
-        self.click(USER_FORM_LOCATORS['CONTINUE_BUTTON'])
+        self.first_name = self.find_element(USER_FORM_LOCATORS['FIRST_NAME'])
+        self.last_name = self.find_element(USER_FORM_LOCATORS['LAST_NAME'])
+        self.postal_code = self.find_element(USER_FORM_LOCATORS['POSTAL_CODE'])
+        self.continue_button = self.find_element(USER_FORM_LOCATORS['CONTINUE_BUTTON'])
+
+    def fill_checkout_form(self, first_name, last_name, postal_code): # заполнение формы заказа
+        self.first_name.send_keys(first_name)
+        self.last_name.send_keys(last_name)
+        self.postal_code.send_keys(postal_code)
+        self.continue_button.click()
