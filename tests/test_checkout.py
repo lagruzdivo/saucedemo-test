@@ -15,9 +15,10 @@ def test_checkout(driver, login): # полная последовательно�
         PRODUCT_LOCATORS['ITEM_FLEECE_JACKET']
     )
 
+    inventory_page.go_to_cart()
+
     # Shopping cart container
     cart_page = CartPage(driver)
-    cart_page.go_to_cart()
     cart_page.verify_inventory_items(
         "Sauce Labs Backpack",
         "Sauce Labs Onesie",
@@ -35,4 +36,4 @@ def test_checkout(driver, login): # полная последовательно�
 
     # Подтверждение заказа
     order_success_page = OrderSuccessPage(driver)
-    order_success_page.verify_order_success()
+    order_success_page.verify_success_message()

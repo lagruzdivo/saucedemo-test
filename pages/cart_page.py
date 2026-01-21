@@ -6,11 +6,11 @@ class CartPage(BasePage):
     def __init__(self, driver):
         super().__init__(driver)
 
-        self.shopping_cart_container = driver.find_element(CART_LOCATORS['SHOPPING_CART_CONTAINER'])
+        self.shopping_cart_container = self.find_element(CART_LOCATORS['SHOPPING_CART_CONTAINER'])
         self.checkout_button = self.find_element(CART_LOCATORS['CHECKOUT_BUTTON'])
 
     def verify_cart_badge(self, count, timeout=10): # клик иконки корзины, ждёт появление цифры и проверяет её
-        self.find_element(CART_LOCATORS['SHOPPING_CART_CONTAINER']).click()
+        self.shopping_cart_container.click()
 
         self.wait.until(
             EC.presence_of_element_located(CART_LOCATORS['CART_BADGE'])
